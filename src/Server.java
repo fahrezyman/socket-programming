@@ -18,12 +18,17 @@ public class Server {
         try {
             while (!serverSocket.isClosed()) {
                 Socket socket = serverSocket.accept();
-                System.out.println("Client connected");
-
                 ClientHandler clientHandler = new ClientHandler(socket);
+                System.out.println("LOG : 'Client connected : " + clientHandler.clientUsername + "'");
 
                 Thread thread = new Thread(clientHandler);
                 thread.start();
+
+
+                if (socket.isClosed()){
+                    System.out.println("LOG : 'Client disconnected : " + clientHandler.clientUsername + "'");
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,23 +46,13 @@ public class Server {
 
     }
 
-//    public static String getClientName(Socket socket){
-//        try {
-//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//            return bufferedReader.readLine();
-//        }catch (IOException e){
-//            return null;
-//        }
-//    }
-
-
-
 
 
 
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(8000);
         Server server = new Server(serverSocket);
+        System.out.println("FTPServer Groupchat started");
         System.out.println("Server started in port 8000");
         server.startServer();
 

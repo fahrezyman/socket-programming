@@ -11,7 +11,7 @@ public class ClientHandler implements Runnable {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
-    private String clientUsername;
+    String clientUsername;
 
     public ClientHandler(Socket socket){
         try {
@@ -36,6 +36,7 @@ public class ClientHandler implements Runnable {
                 messageFromClient = bufferedReader.readLine();
                 broadcastMessage(messageFromClient);
             }catch (IOException e){
+                System.out.println("Client disconnected : " + clientUsername);
                 closeEverything(socket,bufferedWriter,bufferedReader);
                 break;
             }
@@ -45,7 +46,7 @@ public class ClientHandler implements Runnable {
     }
 
     public void broadcastMessage(String messageToSend){
-        for (ClientHandler clientHandler : clientHandlers){
+        for (ClientHandler clientHandler : clientHandlers ){
             try{
                 if (!clientHandler.clientUsername.equals(clientUsername)){
                     clientHandler.bufferedWriter.write(messageToSend);

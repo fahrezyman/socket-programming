@@ -79,9 +79,11 @@ public class Client {
 
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your name: ");
+        System.out.println("-----Welcome to the FTPServer GroupChat----");
+        System.out.println("Please enter your username: ");
         String userName = scanner.nextLine();
-        System.out.println("You're Connected with the Server, " + userName);
+        System.out.println("Congrats,You're Connected with the Server, " + userName);
+        System.out.println("-----------------------------------------");
         Socket socket = new Socket("localhost", 8000);
         Client client = new Client(socket, userName);
         client.listenToMessage();
